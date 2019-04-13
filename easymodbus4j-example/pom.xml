@@ -6,7 +6,6 @@
 	<artifactId>easymodbus4j-example</artifactId>
 	<version>0.0.1</version>
 	<name>easymodbus4j-example</name>
-	<url>http://maven.apache.org</url>
 	<properties>
 		<skipAssembly>false</skipAssembly>
 	</properties>
@@ -20,7 +19,7 @@
 		<dependency>
 			<artifactId>easymodbus4j</artifactId>
 			<groupId>com.github.zengfr</groupId>
-			<version>0.0.1</version>
+			<version>0.0.3</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -33,7 +32,7 @@
 					<target>1.8</target>
 					<archive>
 						<manifest>
-							<mainClass>com.github.zengfr.easymodbus4j.example.ModbusConsoleApp</mainClass>
+							<mainClass>com.github.zengfr.easymodbus4j.main.Example</mainClass>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>libs/</classpathPrefix>
 						</manifest>

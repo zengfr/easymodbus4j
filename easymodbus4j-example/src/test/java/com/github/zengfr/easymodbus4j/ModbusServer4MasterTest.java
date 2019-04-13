@@ -5,15 +5,15 @@ import org.junit.Test;
 
 public class ModbusServer4MasterTest extends ModbusSetupTestCase {
 	@Before
-	public void setUp() throws Exception {
-		super.init();
+	public void setup() throws Exception {
+		super.init((short)0);
 		int port = ModbusConstants.DEFAULT_MODBUS_PORT3;
-		super.setUpServer4Master(port);
-		super.setUpClient4Slave(port);
+		super.setupServer4Master(port);
+		super.setupClient4Slave(port);
 	}
 
 	@Test
 	public void testServer4Master() throws Exception {
-		super.testServer4Master(22);
+		super.testServer4Master(2222);
 	}
 }

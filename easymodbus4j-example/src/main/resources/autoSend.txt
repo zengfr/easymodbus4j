@@ -2,7 +2,7 @@
 readHoldingRegisters|33|17
 readInputRegisters|49|18
 readDiscreteInputs|65|16
-readCoils|81|22
+readCoils|81|1
 writeSingleCoil|17|F
 writeSingleRegister|18|22
 writeSingleCoil|19|T

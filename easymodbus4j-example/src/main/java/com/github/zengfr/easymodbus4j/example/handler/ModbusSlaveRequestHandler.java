@@ -1,4 +1,4 @@
-package com.github.zengfr.easymodbus4j.example;
+package com.github.zengfr.easymodbus4j.example.handler;
 
 import java.util.BitSet;
 import java.util.Random;
@@ -23,7 +23,7 @@ import com.github.zengfr.easymodbus4j.handle.ModbusRequestHandler;
 import com.github.zengfr.easymodbus4j.protocol.ModbusFrame;
 import com.github.zengfr.easymodbus4j.protocol.ModbusFunction;
 import com.github.zengfr.easymodbus4j.util.BitSetUtil;
-import com.github.zengfr.easymodbus4j.util.LogUtil;
+import com.github.zengfr.easymodbus4j.util.ModbusFrameUtil;
 import com.github.zengfr.easymodbus4j.util.RegistersUtil;
 
 import io.netty.channel.Channel;
@@ -35,11 +35,25 @@ import io.netty.util.internal.logging.InternalLoggerFactory;
 public class ModbusSlaveRequestHandler extends ModbusRequestHandler {
 	private static final InternalLogger logger = InternalLoggerFactory.getInstance(ModbusSlaveRequestHandler.class);
 	protected static Random random = new Random();
+	private short transactionIdentifierOffset = 0;
+
+	public ModbusSlaveRequestHandler() {
+		this((short) 0);
+	}
+
+	public ModbusSlaveRequestHandler(short transactionIdentifierOffset) {
+		super();
+		this.transactionIdentifierOffset = transactionIdentifierOffset;
+	}
+
+	@Override
+	protected int getTransactionIdentifier(int transactionIdentifier) {
+		return transactionIdentifier + transactionIdentifierOffset;
+	}
 
 	@Override
 	protected ModbusFunction processRequestFrame(Channel channel, ModbusFrame frame) {
-
-		LogUtil.showLog(logger, channel, frame);
+		ModbusFrameUtil.showFrameLog(logger, channel, frame);
 		return super.processRequestFrame(channel, frame);
 	}
 
@@ -57,7 +71,8 @@ public class ModbusSlaveRequestHandler extends ModbusRequestHandler {
 	protected ReadCoilsResponse readCoils(ReadCoilsRequest request) {
 		BitSet coils = new BitSet(request.getQuantityOfCoils());
 		coils = BitSetUtil.getRandomBits(request.getQuantityOfCoils(), random);
-
+		if (coils.size() > 0 && random.nextInt(99) < 66)
+			coils.set(0, false);
 		return new ReadCoilsResponse(coils);
 	}
 
