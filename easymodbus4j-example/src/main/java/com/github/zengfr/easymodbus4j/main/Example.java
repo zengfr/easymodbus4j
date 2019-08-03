@@ -11,6 +11,6 @@ public class Example {
 		if (args == null || args.length <= 0)
 			args = new String[] { "" };
 		String[] argsArray = args[0].split("[,;|]");
-		ModbusConsoleApp.init(argsArray);
+		ModbusConsoleApp.initAndStart(argsArray);
 	}
 }

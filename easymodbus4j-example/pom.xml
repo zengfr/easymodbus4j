@@ -17,9 +17,19 @@
 	</parent>
 	<dependencies>
 		<dependency>
-			<artifactId>easymodbus4j</artifactId>
+			<artifactId>easymodbus4j-client</artifactId>
 			<groupId>com.github.zengfr</groupId>
-			<version>0.0.3</version>
+			<version>0.0.4</version>
+		</dependency>
+		<dependency>
+			<artifactId>easymodbus4j-server</artifactId>
+			<groupId>com.github.zengfr</groupId>
+			<version>0.0.4</version>
+		</dependency>
+		<dependency>
+			<artifactId>easymodbus4j-extension</artifactId>
+			<groupId>com.github.zengfr</groupId>
+			<version>0.0.4</version>
 		</dependency>
 	</dependencies>
 	<build>

@@ -6,9 +6,23 @@
 			</pattern>
 		</encoder>
 	</appender>
+	<appender name="upd"
+		class="com.github.zengfr.easymodbus4j.log.UpdAppender">
+		<!--encoder> <pattern>%d{HH:mm:ss.SSS}|%-5level|%thread|%logger{64}-%msg%n</pattern> 
+			</encoder -->
+		<encoder
+			class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+			<layout class="ch.qos.logback.classic.log4j.XMLLayout">
+				<locationInfo>true</locationInfo>
+			</layout>
+		</encoder>
+		<ip>127.0.0.1</ip>
+		<port>7071</port>
+	</appender>
 
 	<root level="DEBUG">
 		<appender-ref ref="STDOUT" />
+		<appender-ref ref="upd" />
 	</root>
 	<logger name="com.github.zengfr" level="DEBUG" />
 	<logger name="io.netty" level="DEBUG" />

@@ -1,11 +1,25 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.github.zengfr.easymodbus4j.app.client;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
-import org.apache.commons.lang3.StringUtils;
-
 import com.github.zengfr.easymodbus4j.app.common.DeviceCommand;
 /**
  * @author zengfr QQ:362505707/1163551688 Email:zengfr3000@qq.com
@@ -22,23 +36,9 @@ public class DeviceClient extends UdpClient {
 		getSender().send(host, port, buildCommandMessage(uuid, cmd));
 		return uuid;
 	}
-
-	public <T> String sendCommand2(String host, int port, DeviceCommand<T> cmd) throws InterruptedException {
-		String uuid = getUUID();
-		getSender().send(host, port, buildCommandMessage2(uuid, cmd));
-		return uuid;
-	}
-
-	protected <T> String buildCommandMessage2(String uuid, DeviceCommand<T> cmd) {
-		return String.format("%s;%s;%s;%s;%s;%s;%s;%s", uuid, cmd.deviceId, cmd.ip, cmd.port, cmd.version, cmd.functionCode, cmd.address,
-				StringUtils.join(cmd.values, ","));
-	}
-
 	protected <T> String buildCommandMessage(String uuid, DeviceCommand<T> cmd) {
-		return String.format("%s;%s;%s;%s;%s;%s;%s;%s", uuid, cmd.deviceId, cmd.ip, cmd.port,cmd.version, cmd.functionCode, cmd.address,
-				cmd.value);
+		return String.format("%s;%s", uuid, cmd.toString());
 	}
-
 	protected String getUUID() {
 		int randNumber = rnd.nextInt(MAX - MIN + 1) + MIN;
 		return String.format("%s%s", LocalDateTime.now(ZoneOffset.of("+8")).format(formatter), randNumber);
