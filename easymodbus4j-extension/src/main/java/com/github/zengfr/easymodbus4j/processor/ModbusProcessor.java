@@ -21,7 +21,5 @@ package com.github.zengfr.easymodbus4j.processor;
  */
 public interface ModbusProcessor {
 	short getTransactionIdentifierOffset();
-
 	boolean isShowFrameDetail();
-
 }

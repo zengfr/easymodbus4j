@@ -32,7 +32,8 @@ import com.github.zengfr.easymodbus4j.func.response.WriteMultipleCoilsResponse;
 import com.github.zengfr.easymodbus4j.func.response.WriteMultipleRegistersResponse;
 import com.github.zengfr.easymodbus4j.func.response.WriteSingleCoilResponse;
 import com.github.zengfr.easymodbus4j.func.response.WriteSingleRegisterResponse;
-import com.github.zengfr.easymodbus4j.handle.ModbusRequestHandler;
+import com.github.zengfr.easymodbus4j.handler.ModbusRequestHandler;
+import com.github.zengfr.easymodbus4j.logging.ChannelLogger;
 import com.github.zengfr.easymodbus4j.processor.ModbusSlaveRequestProcessor;
 import com.github.zengfr.easymodbus4j.protocol.ModbusFunction;
 import com.github.zengfr.easymodbus4j.protocol.tcp.ModbusFrame;
@@ -48,7 +49,7 @@ import io.netty.util.internal.logging.InternalLoggerFactory;
  */
 @ChannelHandler.Sharable
 public class ModbusSlaveRequestHandler extends ModbusRequestHandler {
-	private static final InternalLogger logger = InternalLoggerFactory.getInstance(ModbusSlaveRequestHandler.class);
+	private static final ChannelLogger logger = ChannelLogger.getLogger(ModbusSlaveRequestHandler.class);
 
 	private ModbusSlaveRequestProcessor processor;
 

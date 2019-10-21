@@ -30,14 +30,31 @@ public class DeviceClient extends UdpClient {
 	private static final int MIN = 10000 * 100;
 	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 	private static Random rnd = new Random();
+	private static class DeviceClientHolder {
+		private static final DeviceClient INSTANCE = new DeviceClient();
+	}
 
+	public static DeviceClient getInstance() {
+		return DeviceClientHolder.INSTANCE;
+	}
+	private DeviceClient() {
+		
+	}
 	public <T> String sendCommand(String host, int port, DeviceCommand<T> cmd) throws InterruptedException {
 		String uuid = getUUID();
 		getSender().send(host, port, buildCommandMessage(uuid, cmd));
 		return uuid;
 	}
+	public <T> String sendCommand(String host, int port, String msg) throws InterruptedException   {
+		String uuid = getUUID();
+		getSender().send(host, port, buildCommandMessage(uuid, msg));
+		return uuid;
+	}
 	protected <T> String buildCommandMessage(String uuid, DeviceCommand<T> cmd) {
-		return String.format("%s;%s", uuid, cmd.toString());
+		return buildCommandMessage(uuid, cmd.toString());
+	}
+	protected <T> String buildCommandMessage(String uuid, String cmd) {
+		return String.format("%s;%s", uuid, cmd);
 	}
 	protected String getUUID() {
 		int randNumber = rnd.nextInt(MAX - MIN + 1) + MIN;

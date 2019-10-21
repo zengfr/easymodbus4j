@@ -49,7 +49,7 @@ public class ModbusConsoleApp {
 		ModbusConfs.MASTER_SHOW_DEBUG_LOG = cfg.showDebugLog;
 		ModbusConfs.SLAVE_SHOW_DEBUG_LOG = cfg.showDebugLog;
 		ModbusConfs.IDLE_TIMEOUT_SECOND = cfg.idleTimeOut;
-		
+		ModbusConfs.RESPONS_EFRAME_IGNORE_LENGTH_THRESHOLD= cfg.ignoreLengthThreshold;
 
 		ModbusMasterResponseProcessor masterProcessor = new ExampleModbusMasterResponseProcessor(cfg.transactionIdentifierOffset);
 		ModbusSlaveRequestProcessor slaveProcessor = new ExampleModbusSlaveRequestProcessor(cfg.transactionIdentifierOffset);

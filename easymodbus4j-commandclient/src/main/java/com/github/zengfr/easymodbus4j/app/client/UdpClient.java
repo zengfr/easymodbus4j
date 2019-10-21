@@ -16,13 +16,16 @@
  */
 package com.github.zengfr.easymodbus4j.app.client;
 
-import com.github.zengfr.easymodbus4j.app.common.UdpSender;
+import com.github.zengfr.easymodbus4j.app.sender.UdpSender;
+import com.github.zengfr.easymodbus4j.app.sender.UdpSenderFactory;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioDatagramChannel;
+
 /**
  * @author zengfr QQ:362505707/1163551688 Email:zengfr3000@qq.com
  *         https://github.com/zengfr/easymodbus4j
@@ -30,13 +33,25 @@ import io.netty.channel.socket.nio.NioDatagramChannel;
 public class UdpClient {
 	protected Channel channel;
 	protected UdpSender sender;
+	protected boolean isInit = false;
+
 	public void setup(UdpClientHandler handler) throws InterruptedException {
-		EventLoopGroup group = new NioEventLoopGroup();
-		Bootstrap b = new Bootstrap();
-		b.group(group).channel(NioDatagramChannel.class).handler(handler);
-		channel = b.bind(0).sync().channel();
-		sender=new UdpSender(channel);
-		//channel.closeFuture().await();
+		setup(handler, false);
+	}
+
+	public void setup(UdpClientHandler handler, boolean wait) throws InterruptedException {
+		if (!isInit) {
+			EventLoopGroup group = new NioEventLoopGroup();
+			Bootstrap b = new Bootstrap();
+			b.option(ChannelOption.SO_BROADCAST, true);
+			b.group(group).channel(NioDatagramChannel.class).handler(handler);
+			channel = b.bind(0).sync().channel();
+			sender = UdpSenderFactory.getInstance().get(channel);
+			isInit = true;
+			if (wait) {
+				channel.closeFuture().await();
+			}
+		}
 	}
 
 	public UdpSender getSender() {
@@ -47,5 +62,4 @@ public class UdpClient {
 		return channel;
 	}
 
-	
 }

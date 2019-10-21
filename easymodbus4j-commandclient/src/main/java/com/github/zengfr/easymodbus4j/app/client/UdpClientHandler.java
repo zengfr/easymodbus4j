@@ -18,26 +18,25 @@ package com.github.zengfr.easymodbus4j.app.client;
 
 import org.apache.commons.lang3.StringUtils;
 
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.DatagramPacket;
-
+import io.netty.util.CharsetUtil;
+import io.netty.channel.ChannelHandler.Sharable;
 /**
  * @author zengfr QQ:362505707/1163551688 Email:zengfr3000@qq.com
  *         https://github.com/zengfr/easymodbus4j
  */
+@Sharable
 public abstract class UdpClientHandler extends SimpleChannelInboundHandler<DatagramPacket> {
 	@Override
-	protected void channelRead0(ChannelHandlerContext ctx, DatagramPacket msg) throws Exception {
-		final ByteBuf buf = msg.content();
-		int readableBytes = buf.readableBytes();
-		byte[] content = new byte[readableBytes];
-		buf.readBytes(content);
-		channelRead0(ctx, new String(content, "UTF-8"));
+	protected void channelRead0(ChannelHandlerContext ctx, DatagramPacket packet) throws Exception {
+		if(isDoReceived()) {
+		messageReceived(ctx, packet.content().toString(CharsetUtil.UTF_8));
+		}
 	}
 
-	protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
+	protected void messageReceived(ChannelHandlerContext ctx, String msg) throws Exception {
 		if (StringUtils.isNotEmpty(msg)) {
 			String[] args = msg.split(";");
 			if (args.length >= 11) {
@@ -55,10 +54,12 @@ public abstract class UdpClientHandler extends SimpleChannelInboundHandler<Datag
 				String[] values = args[10].split(",");
 				channelRead0(uuid, deviceId, ip, port, version, functionCode, address, valueType, value, values,
 						success);
+				values=null;
 			}
+			args=null;
 		}
 	}
-
+	protected abstract boolean isDoReceived();
 	protected abstract void channelRead0(String uuid, String deviceId, String ip, Integer port, String version,
 			Integer functionCode, Integer address, String valueType, String value, String[] values, int success)
 			throws Exception;

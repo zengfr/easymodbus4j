@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.zengfr</groupId>
 	<artifactId>easymodbus4j-example</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.5</version>
 	<name>easymodbus4j-example</name>
 	<properties>
 		<skipAssembly>false</skipAssembly>
@@ -19,18 +19,25 @@
 		<dependency>
 			<artifactId>easymodbus4j-client</artifactId>
 			<groupId>com.github.zengfr</groupId>
-			<version>0.0.4</version>
+			<version>0.0.5</version>
 		</dependency>
 		<dependency>
 			<artifactId>easymodbus4j-server</artifactId>
 			<groupId>com.github.zengfr</groupId>
-			<version>0.0.4</version>
+			<version>0.0.5</version>
 		</dependency>
 		<dependency>
 			<artifactId>easymodbus4j-extension</artifactId>
 			<groupId>com.github.zengfr</groupId>
-			<version>0.0.4</version>
+			<version>0.0.5</version>
 		</dependency>
+		<dependency>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
+			<version>6.2</version>
+		</dependency>
+ 
+		
 	</dependencies>
 	<build>
 		<plugins>
@@ -51,6 +58,16 @@
 					</classesDirectory>
 				</configuration>
 			</plugin>
+			 <plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source> 
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+					<skipTests>false</skipTests>
+					</configuration>
+			</plugin> 
 		</plugins>
 	</build>
 </project>

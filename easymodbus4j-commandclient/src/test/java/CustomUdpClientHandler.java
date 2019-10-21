@@ -9,6 +9,11 @@ public class CustomUdpClientHandler extends UdpClientHandler {
 		
 	}
 
+	@Override
+	protected boolean isDoReceived() {
+		return false;
+	}
+
 	
 
 }
