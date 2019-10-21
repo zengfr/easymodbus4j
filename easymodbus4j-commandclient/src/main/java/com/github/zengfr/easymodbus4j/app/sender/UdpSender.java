@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.zengfr.easymodbus4j.app.common;
+package com.github.zengfr.easymodbus4j.app.sender;
 
 import java.net.InetSocketAddress;
 

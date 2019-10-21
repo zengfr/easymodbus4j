@@ -44,17 +44,17 @@ maven:
 <dependency>
 <groupId>com.github.zengfr</groupId>
 <artifactId>easymodbus4j-client</artifactId>
-<version>0.0.4</version>
+<version>0.0.5</version>
 </dependency>
 <dependency>
 <groupId>com.github.zengfr</groupId>
 <artifactId>easymodbus4j-server</artifactId>
-<version>0.0.4</version>
+<version>0.0.5</version>
 </dependency>
 <dependency>
 <groupId>com.github.zengfr</groupId>
 <artifactId>easymodbus4j-extension</artifactId>
-<version>0.0.4</version>
+<version>0.0.5</version>
 </dependency>
 
 第二步step2, implement handler:
@@ -116,8 +116,8 @@ ModbusServerTcpFactory.getInstance().createServer4Master(port,modbusChannelIniti
 
 <pre>
 Example run startup:
-1、unzip file easymodbus4j-example-0.0.1-release.zip.
-2、for modbus master mode:open autosend.txt file in dir or autosend.txt rsourcefile in easymodbus4j-example-0.0.1.jar 
+1、unzip file easymodbus4j-example-0.0.5-release.zip.
+2、for modbus master mode:open autosend.txt file in dir or autosend.txt rsourcefile in easymodbus4j-example-0.0.5.jar 
 3、for modbus master mode:edit autosend.txt file
 4、start startup.bat.
 5、you also can edit *.bat for modbus master/salve mode: .
@@ -133,7 +133,3 @@ capture运行效果图截屏:
 ![easymodbus4j运行效果图截屏2](https://github.com/zengfr/easymodbus4j/blob/master/easymodbus4j-example/src/main/resources/capture2.PNG?raw=true)
 ![easymodbus4j运行效果图截屏3](https://github.com/zengfr/easymodbus4j/blob/master/easymodbus4j-example/src/main/resources/capture3.PNG?raw=true)
 ![easymodbus4j运行效果图截屏4](https://github.com/zengfr/easymodbus4j/blob/master/easymodbus4j-example/src/main/resources/capture4.PNG?raw=true)
-<pre>
-update feature/history:
-0.0.4 2019.08.03 support Modbus RTU protocol and heartbeat
-</pre>

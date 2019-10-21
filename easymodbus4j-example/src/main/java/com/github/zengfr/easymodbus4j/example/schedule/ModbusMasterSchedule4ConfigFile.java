@@ -21,9 +21,13 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.github.zengfr.easymodbus4j.common.util.FileUtil;
 import com.github.zengfr.easymodbus4j.common.util.InputStreamUtil;
 import com.github.zengfr.easymodbus4j.schedule.ModbusMasterSchedule;
+import com.github.zengfr.easymodbus4j.sender.util.ModbusRequestSendUtil.PriorityStrategy;
 import com.google.common.collect.Lists;
 
 import io.netty.util.internal.logging.InternalLogger;
@@ -33,13 +37,20 @@ import io.netty.util.internal.logging.InternalLoggerFactory;
  *         https://github.com/zengfr/easymodbus4j
  */
 public class ModbusMasterSchedule4ConfigFile extends ModbusMasterSchedule {
-	private static final InternalLogger logger = InternalLoggerFactory
-			.getInstance(ModbusMasterSchedule4ConfigFile.class);
+	private static Logger logger = LoggerFactory
+			.getLogger(ModbusMasterSchedule4ConfigFile.class.getSimpleName());
 
 	protected static String configFileName = "autoSend.txt";
-
 	@Override
-	protected InternalLogger getLogger() {
+	protected int getFixedDelay() {	 
+		return 0;
+	}
+	@Override
+	protected PriorityStrategy getPriorityStrategy() {
+		return PriorityStrategy.Channel;
+	}
+	@Override
+	protected Logger getLogger() {
 
 		return logger;
 	}
@@ -75,5 +86,7 @@ public class ModbusMasterSchedule4ConfigFile extends ModbusMasterSchedule {
 		}
 		return strList;
 	}
+
+	
 
 }

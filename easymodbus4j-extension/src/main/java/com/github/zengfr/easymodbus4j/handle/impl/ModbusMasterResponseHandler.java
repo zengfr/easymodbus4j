@@ -16,8 +16,9 @@
  */
 package com.github.zengfr.easymodbus4j.handle.impl;
 
-import com.github.zengfr.easymodbus4j.func.AbstractFunction;
-import com.github.zengfr.easymodbus4j.handle.ModbusResponseHandler;
+import com.github.zengfr.easymodbus4j.func.AbstractRequest;
+import com.github.zengfr.easymodbus4j.handler.ModbusResponseHandler;
+import com.github.zengfr.easymodbus4j.logging.ChannelLogger;
 import com.github.zengfr.easymodbus4j.processor.ModbusMasterResponseProcessor;
 import com.github.zengfr.easymodbus4j.protocol.ModbusFunction;
 import com.github.zengfr.easymodbus4j.protocol.tcp.ModbusFrame;
@@ -25,32 +26,29 @@ import com.github.zengfr.easymodbus4j.util.ModbusFrameUtil;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
-import io.netty.util.internal.logging.InternalLogger;
-import io.netty.util.internal.logging.InternalLoggerFactory;
 /**
  * @author zengfr QQ:362505707/1163551688 Email:zengfr3000@qq.com
  *         https://github.com/zengfr/easymodbus4j
  */
 @ChannelHandler.Sharable
 public class ModbusMasterResponseHandler extends ModbusResponseHandler {
-	private static final InternalLogger logger = InternalLoggerFactory.getInstance(ModbusMasterResponseHandler.class);
+	private static final ChannelLogger logger = ChannelLogger.getLogger(ModbusMasterResponseHandler.class);
 	private ModbusMasterResponseProcessor processor;
 
 	public short getTransactionIdentifierOffset() {
 		return this.processor.getTransactionIdentifierOffset();
 	}
-
 	public ModbusMasterResponseHandler(ModbusMasterResponseProcessor processor) {
 		super(true);
 		this.processor = processor;
 	}
 
 	@Override
-	protected void processResponseFrame(Channel channel, ModbusFrame frame) {
+	protected boolean processResponseFrame(Channel channel, ModbusFrame frame) {
 		if (this.processor.isShowFrameDetail()) {
 			ModbusFrameUtil.showFrameLog(logger, channel, frame, true);
 		}
-		super.processResponseFrame(channel, frame);
+		return super.processResponseFrame(channel, frame);
 	}
 
 	@Override
@@ -63,14 +61,14 @@ public class ModbusMasterResponseHandler extends ModbusResponseHandler {
 	}
 
 	@Override
-	public ModbusFrame getResponse(int reqTransactionIdentifier) throws Exception {
+	public ModbusFrame getResponseCache(int reqTransactionIdentifier,short funcCode) throws Exception {
 		int respTransactionIdentifier = getRespTransactionIdByReqTransactionId(reqTransactionIdentifier);
-		return super.getResponse(respTransactionIdentifier);
+		return super.getResponseCache(respTransactionIdentifier,  funcCode);
 	}
 
 	@Override
-	protected void processResponseFrame(Channel channel, int unitId, AbstractFunction reqFunc, ModbusFunction respFunc) {
-		this.processor.processResponseFrame(channel, unitId, reqFunc, respFunc);
+	protected boolean processResponseFrame(Channel channel, int unitId, AbstractRequest reqFunc, ModbusFunction respFunc) {
+		return this.processor.processResponseFrame(channel, unitId, reqFunc, respFunc);
 		
 	}
 

@@ -16,15 +16,6 @@
  */
 package com.github.zengfr.easymodbus4j.example;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Properties;
-import java.util.Set;
-
 import com.alibaba.fastjson.JSON;
 import com.github.zengfr.easymodbus4j.ModbusConsts;
 import com.github.zengfr.easymodbus4j.common.util.ParseStringUtil;
@@ -32,6 +23,7 @@ import com.github.zengfr.easymodbus4j.ModbusConfs;
 
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
+
 /**
  * @author zengfr QQ:362505707/1163551688 Email:zengfr3000@qq.com
  *         https://github.com/zengfr/easymodbus4j
@@ -48,9 +40,10 @@ public class ModbusConfig {
 
 	public short unit_IDENTIFIER;
 	public short transactionIdentifierOffset;
-
-	public int udpPort;
+	public int ignoreLengthThreshold;
 	public String heartbeat;
+	public int scheduleFixedDelay;
+	public int udpPort;
 
 	public static ModbusConfig parse(String[] argsArray) {
 		ModbusConfig cfg = new ModbusConfig();
@@ -61,14 +54,14 @@ public class ModbusConfig {
 		cfg.unit_IDENTIFIER = ParseStringUtil.parseShort(argsArray, 3, ModbusConsts.DEFAULT_UNIT_IDENTIFIER);
 		cfg.transactionIdentifierOffset = ParseStringUtil.parseShort(argsArray, 4, (short) 0);
 		cfg.showDebugLog = ParseStringUtil.parseBoolean(argsArray, 5, true);
-		cfg.idleTimeOut=ParseStringUtil.parseInt(argsArray, 6, ModbusConfs.IDLE_TIMEOUT_SECOND);
-		
+		cfg.idleTimeOut = ParseStringUtil.parseInt(argsArray, 6, ModbusConfs.IDLE_TIMEOUT_SECOND);
+
 		cfg.autoSend = ParseStringUtil.parseBoolean(argsArray, 7, true);
 		cfg.sleep = ParseStringUtil.parseInt(argsArray, 8, 1000 * 15);
 		cfg.heartbeat = ParseStringUtil.parseString(argsArray, 9, ModbusConsts.HEARTBEAT);
+		cfg.ignoreLengthThreshold = ParseStringUtil.parseInt(argsArray, 10, ModbusConfs.RESPONS_EFRAME_IGNORE_LENGTH_THRESHOLD);
 		
-		cfg.udpPort = ParseStringUtil.parseInt(argsArray, 10, ModbusConfs.DEFAULT_MODBUS_PORT5);
-		
+		cfg.udpPort = ParseStringUtil.parseInt(argsArray, 11, ModbusConfs.DEFAULT_MODBUS_PORT5);
 		logger.info(JSON.toJSONString(cfg));
 		return cfg;
 	}

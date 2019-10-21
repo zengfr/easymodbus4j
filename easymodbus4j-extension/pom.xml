@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.zengfr</groupId>
 	<artifactId>easymodbus4j-extension</artifactId>
-	<version>0.0.4</version>
+	<version>0.0.5</version>
 	<properties>
 		<skipAssembly>true</skipAssembly>
 	</properties>
@@ -18,7 +18,7 @@
 		<dependency>
 			<artifactId>easymodbus4j</artifactId>
 			<groupId>com.github.zengfr</groupId>
-			<version>0.0.4</version>
+			<version>0.0.5</version>
 		</dependency>
 	</dependencies>
 </project>

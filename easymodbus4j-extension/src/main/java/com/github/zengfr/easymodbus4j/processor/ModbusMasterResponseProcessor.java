@@ -16,7 +16,7 @@
  */
 package com.github.zengfr.easymodbus4j.processor;
 
-import com.github.zengfr.easymodbus4j.func.AbstractFunction;
+import com.github.zengfr.easymodbus4j.func.AbstractRequest;
 import com.github.zengfr.easymodbus4j.protocol.ModbusFunction;
 
 import io.netty.channel.Channel;
@@ -26,5 +26,5 @@ import io.netty.channel.Channel;
  */
 public interface ModbusMasterResponseProcessor extends ModbusProcessor {
 	 
-	void processResponseFrame(Channel channel,int unitId, AbstractFunction reqFunc, ModbusFunction respFunc);
+	boolean processResponseFrame(Channel channel,int unitId, AbstractRequest reqFunc, ModbusFunction respFunc);
 }

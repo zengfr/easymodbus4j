@@ -49,7 +49,7 @@ public class ModbusConsoleApp {
 		ModbusConfs.MASTER_SHOW_DEBUG_LOG = cfg.showDebugLog;
 		ModbusConfs.SLAVE_SHOW_DEBUG_LOG = cfg.showDebugLog;
 		ModbusConfs.IDLE_TIMEOUT_SECOND = cfg.idleTimeOut;
-		
+		ModbusConfs.RESPONS_EFRAME_IGNORE_LENGTH_THRESHOLD= cfg.ignoreLengthThreshold;
 
 		ModbusMasterResponseProcessor masterProcessor = new ExampleModbusMasterResponseProcessor(cfg.transactionIdentifierOffset);
 		ModbusSlaveRequestProcessor slaveProcessor = new ExampleModbusSlaveRequestProcessor(cfg.transactionIdentifierOffset);
@@ -107,7 +107,7 @@ public class ModbusConsoleApp {
 			break;
 		}
 		Runnable runnable = () -> ConsoleUtil.clearConsole(true);
-		ScheduledUtil.scheduleWithFixedDelay(runnable, sleep * 5);
+		ScheduledUtil.getInstance().scheduleAtFixedRate(runnable, sleep * 5);
 	}
 
 	protected static void sendRequests4Auto(boolean autoSend, int sleep, Collection<Channel> channels) throws InterruptedException {
