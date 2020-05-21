@@ -51,7 +51,7 @@ public abstract class AbstractModbusProcessor implements ModbusProcessor {
 		if (reqFunc == null)
 			return false;
 		int quantityOfInputRegisters = reqFunc.getValue();
-		return quantityOfInputRegisters * 2 == respFuncValuesArray.length || (respFuncValuesArray.length == 1 && quantityOfInputRegisters == respFuncValuesArray.length);
+		return (quantityOfInputRegisters * 2 == respFuncValuesArray.length) || (respFuncValuesArray.length == 1 && quantityOfInputRegisters == respFuncValuesArray.length);
 	}
 
 	public short getTransactionIdentifierOffset() {
