@@ -80,7 +80,7 @@ modbusClient = ModbusClientRtuFactory.getInstance().createClient4Master(host, po
 modbusServer = ModbusServerRtuFactory.getInstance().createServer4Slave(port, requestHandler);
 
 第四步step4:
-4.1 how to send a request ?
+4.1 how to send a request ? to send data
 Thread.sleep(3*1000);// sleep 3s before,when client or server open connection is async;
 Channel  channel =  client.getChannel());
 Channel  channel =  server.getChannelsBy(...));
@@ -90,7 +90,7 @@ sender.readCoils(...)
 sender.readDiscreteInputs(...)
 sender.writeSingleRegister(...)
 
-4.2 how to process request/response?
+4.2 how to process request/response? to receive data
 see code in processResponseFrame mothod in  ModbusMasterResponseHandler.java or ModbusMasterResponseProcessor.java
 public void processResponseFrame(Channel channel, int unitId, AbstractFunction reqFunc, ModbusFunction respFunc) {
 		if (respFunc instanceof ReadCoilsResponse) {
@@ -115,8 +115,11 @@ ModbusFrameUtil.showFrameLog(logger, channel, frame);
 ModbusChannelInitializer modbusChannelInitializer=...;
 ModbusServerTcpFactory.getInstance().createServer4Master(port,modbusChannelInitializer);
 ``` 
-#Example Project Code [master/easymodbus4j-example/src/main/java/com/github/zengfr/easymodbus4j/example](https://github.com/zengfr/easymodbus4j/tree/master/easymodbus4j-example/src/main/java/com/github/zengfr/easymodbus4j/example)
+#Example Project Code [example1](https://github.com/zengfr/easymodbus4j/tree/master/easymodbus4j-example/src/main/java/com/github/zengfr/easymodbus4j/example)
+[example3](https://github.com/zengfr/easymodbus4j/tree/master/easymodbus4j-example/src/main/java/com/github/zengfr/easymodbus4j/example3)
 
+[other example1](https://gitee.com/zengfr/easymodbus4j/tree/master/easymodbus4j-example/src/main/java/com/github/zengfr/easymodbus4j/example)
+[other example3](https://gitee.com/zengfr/easymodbus4j/tree/master/easymodbus4j-example/src/main/java/com/github/zengfr/easymodbus4j/example3)
 <pre>
 Example run startup:
 1、unzip file easymodbus4j-example-0.0.5-release.zip.
@@ -131,8 +134,18 @@ Example run startup:
 4、Master模式 可以设置autosend.txt文件，定时发送读写请求。
 5、记事本打开bat文件可以编辑相关参数，如定时延时发送时间以及详细日志开关。
 </pre>
+[easymodbus4j 开发实例系列教程之1----客户端master模式](https://my.oschina.net/zengfr/blog/4304442)
+<br/>
+[easymodbus4j 开发实例系列教程之2----服务端master模式](https://my.oschina.net/zengfr/blog/4305723)
+<br/>
 capture运行效果图截屏:
 ![easymodbus4j运行效果图截屏1](https://github.com/zengfr/easymodbus4j/blob/master/easymodbus4j-example/src/main/resources/capture.PNG?raw=true)
 ![easymodbus4j运行效果图截屏2](https://github.com/zengfr/easymodbus4j/blob/master/easymodbus4j-example/src/main/resources/capture2.PNG?raw=true)
 ![easymodbus4j运行效果图截屏3](https://github.com/zengfr/easymodbus4j/blob/master/easymodbus4j-example/src/main/resources/capture3.PNG?raw=true)
 ![easymodbus4j运行效果图截屏4](https://github.com/zengfr/easymodbus4j/blob/master/easymodbus4j-example/src/main/resources/capture4.PNG?raw=true)
+
+capture运行效果图截屏:
+![easymodbus4j运行效果图截屏1](https://gitee.com/zengfr/easymodbus4j/raw/master/easymodbus4j-example/src/main/resources/capture.PNG?raw=true)
+![easymodbus4j运行效果图截屏2](https://gitee.com/zengfr/easymodbus4j/raw/master/easymodbus4j-example/src/main/resources/capture2.PNG?raw=true)
+![easymodbus4j运行效果图截屏3](https://gitee.com/zengfr/easymodbus4j/raw/master/easymodbus4j-example/src/main/resources/capture3.PNG?raw=true)
+![easymodbus4j运行效果图截屏4](https://gitee.com/zengfr/easymodbus4j/raw/master/easymodbus4j-example/src/main/resources/capture4.PNG?raw=true)
