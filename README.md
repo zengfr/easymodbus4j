@@ -4,7 +4,7 @@ easymodbus4j是一个高性能和易用的 Modbus 协议的 Java 实现，基于
 # easymodbus4j [en]
 A high-performance and ease-of-use implementation of the Modbus protocol written in Java netty support for modbus 8 mode client/server and master/slave.
  
-# easymodbus4j features 特点:
+### easymodbus4j features 特点:
 - 1、Netty NIO high performance高性能.
 - 2、Modbus Function sync/aync 同步/异步非阻塞。
 - 3、Modbus IoT Data Connector Supports工业物联网平台IoT支持。
@@ -24,8 +24,7 @@ A high-performance and ease-of-use implementation of the Modbus protocol written
 	* Write Multiple Coils (FC15)
 	* Write Multiple Registers (FC16)
 	* Read/Write Multiple Registers (FC23)
-</pre>
-### Repositories
+### repositories
 - Project Example Code : https://github.com/zengfr/easymodbus4j
 - Mvnrepository Repositories: [Repositories Central Sonatype Mvnrepository easymodbus4j](https://mvnrepository.com/artifact/com.github.zengfr/easymodbus4j)
 ``` 
@@ -38,7 +37,7 @@ easymodbus4j-server.jar 	Modbus server服务器端
 easymodbus4j-extension.jar  Modbus extension扩展包 ModbusMasterResponseProcessor/ModbusSlaveRequestProcessor interface
 ``` 
  
-### Quick Start快速开发:
+### quick Start快速开发:
 
 #### 第一步step1 ,import jar:
 - 1.1 maven:
@@ -58,7 +57,7 @@ easymodbus4j-extension.jar  Modbus extension扩展包 ModbusMasterResponseProces
 	<artifactId>easymodbus4j-extension</artifactId>
 	<version>0.0.5</version>
 	</dependency>
-	​```
+	```
 #### 第二步step2,implement handler:
 - 2.1 if master  
 	*  实现implement ResponseHandler接口 
@@ -83,8 +82,8 @@ easymodbus4j-extension.jar  Modbus extension扩展包 ModbusMasterResponseProces
 
 	modbusClient = ModbusClientRtuFactory.getInstance().createClient4Master(host, port, responseHandler);
 	modbusServer = ModbusServerRtuFactory.getInstance().createServer4Slave(port, requestHandler);
-	​```
-#### 第四步step4 Advanced extensions:
+	```
+#### 第四步step4 ,FAQs and advanced extensions:
 
 - 4.1 how to send a request ? to send data
 	```java
@@ -96,10 +95,10 @@ easymodbus4j-extension.jar  Modbus extension扩展包 ModbusMasterResponseProces
 	sender.readCoils(...)
 	sender.readDiscreteInputs(...)
 	sender.writeSingleRegister(...)
-	​```
+	```
 - 4.2 how to process request/response? to receive data
 	see code in processResponseFrame mothod in  ModbusMasterResponseHandler.java or ModbusMasterResponseProcessor.java
-​
+
 	```java
 	public void processResponseFrame(Channel channel, int unitId, AbstractFunction reqFunc, ModbusFunction respFunc) {
 			if (respFunc instanceof ReadCoilsResponse) {
@@ -108,24 +107,24 @@ easymodbus4j-extension.jar  Modbus extension扩展包 ModbusMasterResponseProces
 				//process business logic for req/resp
 			}
 	};
-	​```
+	```
 -  4.3 how to get response to byteArray for custom decode by yourself?
 	see code in processResponseFrame mothod in  ModbusMasterResponseHandler.java or ModbusMasterResponseProcessor.java
 	
-​	```java
+	```java
 	public void processResponseFrame(Channel channel, int unitId, AbstractFunction reqFunc, ModbusFunction respFunc) {
 			if (respFunc instanceof ReadDiscreteInputsResponse) {
 				ReadDiscreteInputsResponse resp = (ReadDiscreteInputsResponse) respFunc;
 				byte[] resutArray = resp.getInputStatus().toByteArray();
 			}
 	};	
-	​```
+	```
 - 4.4 how to show log? 
 	see ModbusMasterResponseHandler.java in example project.
 
-​	```java
+	```java
 	ModbusFrameUtil.showFrameLog(logger, channel, frame);
-	​```
+	```
 - 4.5 how to custom a client/server advance by yourself?
 	```java
 	ModbusChannelInitializer modbusChannelInitializer=...;
@@ -142,9 +141,9 @@ easymodbus4j-extension.jar  Modbus extension扩展包 ModbusMasterResponseProces
 - other example3 
 [other example3](https://gitee.com/zengfr/easymodbus4j/tree/master/easymodbus4j-example/src/main/java/com/github/zengfr/easymodbus4j/example3)
 -  client4Master demo:[client4Master demo](
-https://gitee.com/zengfr/easymodbus4j/blob/master/easymodbus4j-example/src/main/java/com/github/zengfr/easymodbus4j/example3/Example3.java) [最佳简单快速参考实例][Best simple quick]
+https://gitee.com/zengfr/easymodbus4j/blob/master/easymodbus4j-example/src/main/java/com/github/zengfr/easymodbus4j/example3/Example3.java) [最佳简单快速参考实例][Best simple quick demo]
 - server4Master demo:[server4Master demo](
-https://gitee.com/zengfr/easymodbus4j/blob/master/easymodbus4j-example/src/main/java/com/github/zengfr/easymodbus4j/example3/Example4.java)[最佳简单快速参考实例][Best simple quick]
+https://gitee.com/zengfr/easymodbus4j/blob/master/easymodbus4j-example/src/main/java/com/github/zengfr/easymodbus4j/example3/Example4.java)[最佳简单快速参考实例][Best simple quick demo]
 #### Example run startup:
 - 1、unzip file easymodbus4j-example-0.0.5-release.zip.
 - 2、for modbus master mode:open autosend.txt file in dir or autosend.txt rsourcefile in easymodbus4j-example-0.0.5.jar 
