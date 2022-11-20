@@ -18,7 +18,7 @@ public interface DeviceRepositoryPlugin {
 
 	public void updateDeviceIpAndPort(String deviceId, String ipAndPort);
 
-	public void updateFuctionValue(String deviceId, short func, int address, String value);
+	public void updateFuctionValue(String ipAndPort,String deviceId, short func, int address, String value);
 
 	boolean isGetDeviceIdReq(short funCode, int address, int quantityOfInputRegisters);
 }

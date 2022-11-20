@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.zengfr</groupId>
 	<artifactId>easymodbus4j-example2</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.5</version>
 	<name>easymodbus4j-example2</name>
 	<properties>
 		<skipAssembly>false</skipAssembly>
@@ -19,12 +19,12 @@
 		<dependency>
 			<artifactId>easymodbus4j-commandclient</artifactId>
 			<groupId>com.github.zengfr</groupId>
-			<version>0.0.1</version>
+			<version>0.0.5</version>
 		</dependency>
 		<dependency>
 			<artifactId>easymodbus4j-example</artifactId>
 			<groupId>com.github.zengfr</groupId>
-			<version>0.0.1</version>
+			<version>0.0.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
@@ -39,11 +39,21 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
-			</dependency>
+		</dependency>
 
 	</dependencies>
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source> 
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+					<skipTests>false</skipTests>
+					</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>

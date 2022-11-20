@@ -3,22 +3,36 @@ package com.github.zengfr.easymodbus4j.app.schedule;
 import java.util.List;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.github.zengfr.easymodbus4j.app.ModbusServer4MasterApp;
 import com.github.zengfr.easymodbus4j.app.plugin.DeviceRepositoryPlugin;
 import com.github.zengfr.easymodbus4j.app.plugin.DeviceRepositoryPluginRegister;
 import com.github.zengfr.easymodbus4j.app.repository.DataRestRepository;
 import com.github.zengfr.easymodbus4j.app.repository.autosend_listResp;
 import com.github.zengfr.easymodbus4j.app.repository.autosend_listRespItem;
-import com.github.zengfr.easymodbus4j.example.schedule.ModbusMasterSchedule;
+import com.github.zengfr.easymodbus4j.schedule.ModbusMasterSchedule;
+import com.github.zengfr.easymodbus4j.sender.util.ModbusRequestSendUtil.PriorityStrategy;
 import com.google.common.collect.Lists;
 
 import io.netty.util.internal.logging.InternalLogger;
 import io.netty.util.internal.logging.InternalLoggerFactory;
 
 public class ModbusMasterSchedule4All extends ModbusMasterSchedule {
-	private static final InternalLogger logger = InternalLoggerFactory.getInstance(ModbusMasterSchedule4All.class.getSimpleName());
-
+	private static Logger logger=LoggerFactory.getLogger(ModbusMasterSchedule4All.class.getSimpleName());
+	
 	@Override
-	protected InternalLogger getlogger() {
+	protected int getFixedDelay() {
+	 
+		return 300;
+	}
+	@Override
+	protected PriorityStrategy getPriorityStrategy() {
+		return PriorityStrategy.Req;
+	}
+	@Override
+	protected Logger getLogger() {
 
 		return logger;
 	}
@@ -42,7 +56,7 @@ public class ModbusMasterSchedule4All extends ModbusMasterSchedule {
 				}
 			}
 		} catch (Exception e) {
-			logger.error(e);
+			logger.error("parseReqs",e);
 		}
 
 		return reqStrings;
@@ -51,4 +65,7 @@ public class ModbusMasterSchedule4All extends ModbusMasterSchedule {
 	protected static DeviceRepositoryPlugin getDeviceRepositoryPlugin() {
 		return DeviceRepositoryPluginRegister.getInstance().get();
 	}
+	
+
+	
 }

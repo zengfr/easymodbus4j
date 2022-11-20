@@ -22,7 +22,7 @@ import io.netty.util.internal.logging.InternalLoggerFactory;
 
 public class DataRestRepository {
 	private static final InternalLogger logger = InternalLoggerFactory.getInstance(DataRestRepository.class.getSimpleName());
-	private static String serviceUrl = "http://120.127.126.144:19074";
+	private static String serviceUrl = "http://120.27.26.44:9074";
 	private static Cache<String, String> tokenCache = CacheBuilder.newBuilder()
 			.expireAfterWrite(1000 * 60 * 10, TimeUnit.MILLISECONDS).build();
 
@@ -57,7 +57,11 @@ public class DataRestRepository {
 		String url = "/api/modbus/param/mainboardadresslist?";
 		req req = new req();
 		req.access_token = getTokenByCache();
-		return get(String.format("%s%s?%s", serviceUrl, url, ""), true, mainboard_adressResp.class);
+		mainboard_adressResp resp=get(String.format("%s%s?%s", serviceUrl, url, ""), true, mainboard_adressResp.class);
+		if(resp!=null) {
+			logger.debug(JSON.toJSONString(resp));
+		}
+		return resp;
 	}
 
 	public static autosend_listResp get_autosendlist(String versionId) throws Exception {

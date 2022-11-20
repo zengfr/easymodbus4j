@@ -24,7 +24,7 @@ public class Example3 {
 		
 	}
 	private static void initClient() throws Exception {
-		String host="123.45.67.89";
+		String host="123.145.167.189";
 		int port=502;
 		long sleep=3000;
 		short transactionIdentifierOffset=0;

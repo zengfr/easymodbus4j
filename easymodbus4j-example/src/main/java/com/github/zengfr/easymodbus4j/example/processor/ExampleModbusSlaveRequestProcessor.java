@@ -79,7 +79,8 @@ public class ExampleModbusSlaveRequestProcessor extends AbstractModbusProcessor 
 	public ReadDiscreteInputsResponse readDiscreteInputs(short unitIdentifier, ReadDiscreteInputsRequest request) {
 		BitSet coils = new BitSet(request.getQuantityOfCoils());
 		coils = BitSetUtil.getRandomBits(request.getQuantityOfCoils(), random);
-
+		//coils.set(0,79,false);
+		//coils.set(0,true);
 		return new ReadDiscreteInputsResponse(coils);
 	}
 

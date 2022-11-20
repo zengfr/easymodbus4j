@@ -10,5 +10,5 @@ public interface DeviceCommandPlugin extends DevicePlugin {
 
 	public <T> ByteBuf buildRequestFrame(DeviceCommand<T> cmd);
 
-	public void parseResponseFrame(ByteBuf buffer);
+	//public void parseResponseFrame(ByteBuf buffer);
 }

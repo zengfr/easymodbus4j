@@ -1,4 +1,4 @@
-<configuration>
+<configuration debug="false">
 	<appender name="STDOUT"
 		class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
@@ -6,11 +6,136 @@
 			</pattern>
 		</encoder>
 	</appender>
-	<root level="DEBUG">
+	<appender name="upd"
+		class="com.github.zengfr.easymodbus4j.logging.UdpAppender">
+		<!--encoder> <pattern>%d{HH:mm:ss.SSS}|%-5level|%thread|%logger{64}-%msg%n</pattern> 
+			</encoder -->
+		<encoder
+			class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+			<layout class="ch.qos.logback.classic.log4j.XMLLayout">
+				<locationInfo>true</locationInfo>
+			</layout>
+		</encoder>
+		<ip>127.0.0.1</ip>
+		<port>7071</port>
+	</appender>
+	<appender name="siftfile4debug"
+		class="ch.qos.logback.classic.sift.SiftingAppender">
+		<discriminator>
+			<key>channel</key>
+			<defaultValue>default</defaultValue>
+		</discriminator>
+		<sift>
+			<appender name="file4debug"
+				class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+					<level>DEBUG</level>
+				</filter>
+				<rollingPolicy
+					class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+					<fileNamePattern>log/debug-%d{yyyy-MM-dd}-%i-${channel}.log
+					</fileNamePattern>
+					<maxFileSize>20MB</maxFileSize>
+					<maxHistory>31</maxHistory>
+					<totalSizeCap>2GB</totalSizeCap>
+					<cleanHistoryOnStart>true</cleanHistoryOnStart>
+				</rollingPolicy>
+				<encoder  class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+					<Pattern>%d{HH:mm:ss.SSS}|%-5level|%thread|%logger{64}-%msg%n
+					</Pattern>
+				</encoder>
+			</appender>
+		</sift>
+	</appender>
+	<appender name="siftfile4info"
+		class="ch.qos.logback.classic.sift.SiftingAppender">
+		<discriminator>
+			<key>channel</key>
+			<defaultValue>default</defaultValue>
+		</discriminator>
+		<sift>
+			<appender name="file4info"
+				class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<filter class="ch.qos.logback.classic.filter.LevelFilter">
+					<level>INFO</level>
+					<onMatch>ACCEPT</onMatch>
+					<onMismatch>DENY</onMismatch>
+				</filter>
+
+				<rollingPolicy
+					class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+					<fileNamePattern>log/info-%d{yyyy-MM-dd}-%i-${channel}.log
+					</fileNamePattern>
+					<maxFileSize>20MB</maxFileSize>
+					<maxHistory>31</maxHistory>
+					<totalSizeCap>2GB</totalSizeCap>
+					<cleanHistoryOnStart>true</cleanHistoryOnStart>
+				</rollingPolicy>
+				<encoder  class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+					<Pattern>%d{HH:mm:ss.SSS}|%-5level|%thread|%logger{64}-%msg%n
+					</Pattern>
+				</encoder>
+			</appender>
+		</sift>
+	</appender>
+	<appender name="siftfile4warn"
+		class="ch.qos.logback.classic.sift.SiftingAppender">
+		<discriminator>
+			<key>channel</key>
+			<defaultValue>default</defaultValue>
+		</discriminator>
+		<sift>
+			<appender name="file4warn"
+				class="ch.qos.logback.core.rolling.RollingFileAppender">
+				<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+					<level>WARN</level>
+				</filter>
+				<rollingPolicy
+					class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+					<fileNamePattern>log/warn-%d{yyyy-MM-dd}-%i-${channel}.log
+					</fileNamePattern>
+					<maxFileSize>20MB</maxFileSize>
+					<maxHistory>31</maxHistory>
+				</rollingPolicy>
+				<encoder  class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+					<Pattern>%d{HH:mm:ss.SSS}|%-5level|%thread|%logger{64}-%msg%n
+					</Pattern>
+				</encoder>
+			</appender>
+		</sift>
+	</appender>
+	<appender name="asycfile4warn"
+		class="ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>0</discardingThreshold>
+		<queueSize>512</queueSize>
+		<neverBlock>true</neverBlock>
+		<appender-ref ref="siftfile4warn" />
+	</appender>
+	<appender name="asycfile4info"
+		class="ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>0</discardingThreshold>
+		<queueSize>512</queueSize>
+		<neverBlock>true</neverBlock>
+		<appender-ref ref="siftfile4info" />
+	</appender>
+	<appender name="asycfile4debug"
+		class="ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>0</discardingThreshold>
+		<queueSize>512</queueSize>
+		<neverBlock>true</neverBlock>
+		<appender-ref ref="siftfile4debug" />
+	</appender>
+
+	<root level="INFO">
 		<appender-ref ref="STDOUT" />
+		<appender-ref ref="upd" />
+		<appender-ref ref="asycfile4warn" />
+		<appender-ref ref="asycfile4info" />
+		<appender-ref ref="asycfile4debug" />
 	</root>
-	<logger name="com.github.zengfr" level="DEBUG" />
-	<logger name="io.netty" level="DEBUG" />
+	<logger name="com.github.zengfr.easymodbus4j" level="DEBUG" />
+	<logger name="io.netty.handler.logging.LoggingHandler"
+		level="DEBUG" />
 	<logger name="org.apache" level="WARN" />
 	<logger name="httpclient" level="WARN" />
 </configuration>

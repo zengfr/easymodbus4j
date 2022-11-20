@@ -12,8 +12,9 @@ public class Example2 {
 		String[] argsArray = args[0].split("[,;|]");
 		switch (argsArray.length) {
 		default:
-			ModbusServer4MasterApp.init(argsArray);
+			ModbusServer4MasterApp.initAndStart(argsArray);
 			break;
 		}
+		System.in.read();
 	}
 }
